@@ -13,6 +13,7 @@ export default makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
     },
+    backgroundColor: '#fff'
   },
   heading: {
     color: '#fff',

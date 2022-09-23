@@ -35,9 +35,7 @@ function Home() {
   const [search, setSearch] = useState("");
   const [tags, setTags] = useState([]);
 
-  useEffect(() => {
-    dispatch(getPosts());
-  }, [currentId, dispatch]);
+
 
   const handleKeyPress = (evt) => {
     if (evt.keyCode === 13) {
@@ -55,6 +53,7 @@ function Home() {
     if(search.trim() || tags){
       //dispatch => fetch search post
       dispatch(getPostsBySearch({search, tags: tags.join(',') }))
+      navigate(`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`)
     } else {
       navigate('/');
     }
@@ -100,9 +99,11 @@ function Home() {
               <Button onClick={searchPost} className={classes.searchButton} variant="contained" color="primary" >Search</Button>
             </AppBar>
             <Form currentId={currentId} setCurrentId={setCurrentId} />
-            <Paper className={classes.pagination} elevation={6}>
-              <Pagination />
-            </Paper>
+            {(!searchQuery && !tags.length) && (
+              <Paper className={classes.pagination} elevation={6}>
+                <Pagination page={page} />
+              </Paper>
+            )}
           </Grid>
         </Grid>
       </Container>
